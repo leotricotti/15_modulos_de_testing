@@ -9,7 +9,7 @@ const assert = Assert.strict;
 const TEST_TIMEOUT = 15000;
 const randomCode = Math.floor(Math.random() * 1000);
 let pid = "";
-let title;
+let title = "";
 
 // Conexión a la base de datos
 mongoose.connect(MONGO_URL).then(() => {

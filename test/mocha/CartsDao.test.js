@@ -1,22 +1,14 @@
 import mongoose from "mongoose";
-import Carts from "../src/dao/classes/carts.dao.js";
-import Products from "../src/dao/classes/products.dao.js";
+import Carts from "../../src/dao/classes/carts.dao.js";
+import Products from "../../src/dao/classes/products.dao.js";
 import Assert from "assert";
-import config from "../src/config/config.js";
+import config from "../../src/config/config.js";
 
 const MONGO_URL = config.mongo.URL;
 const assert = Assert.strict;
 const TEST_TIMEOUT = 15000;
-const cid = "65402d55da7abee203738dd2";
-const pid = "60b1f2d0d1b2b9c4b4f1e3c4";
-const cart = {
-  products: [
-    {
-      product: pid,
-      quantity: 1,
-    },
-  ],
-};
+let cid = "";
+let pid = "";
 const emptyCart = {
   products: [],
 };
@@ -36,6 +28,12 @@ describe("Testing Carts Dao", () => {
     this.productsDao = new Products();
   });
 
+  beforeEach(async function () {
+    this.timeout(TEST_TIMEOUT);
+    const products = await this.productsDao.getAll();
+    pid = products[0]._id.toString();
+  });
+
   it("Should get all carts", async function () {
     this.timeout(TEST_TIMEOUT);
     const result = await this.cartsDao.getAll();
@@ -44,6 +42,17 @@ describe("Testing Carts Dao", () => {
       result.length > 0,
       true,
       "Result should have at least one element"
+    );
+  });
+
+  it("Should create a cart", async function () {
+    this.timeout(TEST_TIMEOUT);
+    const result = await this.cartsDao.saveCart(emptyCart);
+    cid = result._id;
+    assert.equal(
+      Array.isArray(result.products),
+      true,
+      "Result should be an array"
     );
   });
 
@@ -57,24 +66,18 @@ describe("Testing Carts Dao", () => {
     );
   });
 
-  it("Should create a cart", async function () {
-    this.timeout(TEST_TIMEOUT);
-
-    const result = await this.cartsDao.saveCart(emptyCart);
-
-    assert.equal(
-      Array.isArray(result.products),
-      true,
-      "Result should be an array"
-    );
-  });
-
   it("Should add a product to a cart", async function () {
     this.timeout(TEST_TIMEOUT);
+    const cart = {
+      products: [
+        {
+          product: pid,
+          quantity: 1,
+        },
+      ],
+    };
     const result = await this.cartsDao.updateCart(cid, cart);
-
     const updatedCart = await getUpdatedCart(this.cartsDao, cid);
-
     assert.equal(
       updatedCart.products[0].product.toString() === pid.toString(),
       true,
@@ -84,11 +87,8 @@ describe("Testing Carts Dao", () => {
 
   it("Should empty cart", async function () {
     this.timeout(TEST_TIMEOUT);
-
     const result = await this.cartsDao.emptyCart(cid, emptyCart);
-
     const updatedCart = await getUpdatedCart(this.cartsDao, cid);
-
     assert.equal(
       updatedCart.products.length === 0,
       true,
