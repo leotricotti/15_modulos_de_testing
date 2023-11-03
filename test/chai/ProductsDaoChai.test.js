@@ -1,10 +1,11 @@
 import mongoose from "mongoose";
+import chai from "chai";
 import Products from "../../src/dao/classes/products.dao.js";
-import Assert from "assert";
 import config from "../../src/config/config.js";
+import e from "express";
 
-// Configuración de Assert
-const assert = Assert.strict;
+// Configuración de Chai
+const expect = chai.expect;
 
 // Variables
 const MONGO_URL = config.mongo.URL;
@@ -25,7 +26,7 @@ async function getUpdatedProduct(productsDao, pid) {
 }
 
 // Tests
-describe("Testing Products Dao With Assert", () => {
+describe("Testing Products Dao With Chai", () => {
   before(function () {
     this.productsDao = new Products();
   });
@@ -34,9 +35,10 @@ describe("Testing Products Dao With Assert", () => {
   });
 
   it("Should get all products", async function () {
+    this.timeout(TEST_TIMEOUT);
     const result = await this.productsDao.getAll();
-    assert(Array.isArray(result), "Result should be an array");
-    assert(result.length > 0, "Result array should not be empty");
+    expect(result).to.be.an("array");
+    expect(result.length).to.be.greaterThan(0);
   });
 
   it("Should create a new product", async function () {
@@ -51,12 +53,12 @@ describe("Testing Products Dao With Assert", () => {
     const result = await this.productsDao.saveProduct(product);
     pid = result._id;
     title = result.title;
-    assert.equal(title, product.title, "Title should be equal");
+    expect(result.title).to.be.equal(product.title);
   });
 
   it("Should get one product", async function () {
     const result = await this.productsDao.getOne(pid);
-    assert.equal(result.title, title, "Title should be equal");
+    expect(result.title).to.be.equal(title);
   });
 
   it("Should update a product", async function () {
@@ -69,34 +71,34 @@ describe("Testing Products Dao With Assert", () => {
     };
     const result = await this.productsDao.updateProduct(pid, product);
     const updatedProduct = await getUpdatedProduct(this.productsDao, pid);
-    assert.equal(updatedProduct.title, product.title, "Title should be equal");
+    expect(updatedProduct.title).to.be.equal(product.title);
   });
 
   it("Should delete a product", async function () {
+    this.timeout(TEST_TIMEOUT);
     const result = await this.productsDao.deleteProduct(pid);
     const deletedProduct = await this.productsDao.getOne(pid);
-    assert.equal(deletedProduct === null, true, "Product should be null");
+    expect(deletedProduct).to.be.equal(null);
   });
 
   it("Should get filtered products", async function () {
+    this.timeout(TEST_TIMEOUT);
     const result = await this.productsDao.filteredProducts("Audio");
-    assert.equal(Array.isArray(result), true, "Result should be an array");
-    assert.equal(result.length > 0, true, "Result array should not be empty");
+    expect(result).to.be.an("array");
+    expect(result.length).to.be.greaterThan(0);
   });
 
   it("Should get ordered products", async function () {
+    this.timeout(TEST_TIMEOUT);
     const result = await this.productsDao.orderedProducts("-1");
-    assert.equal(Array.isArray(result), true, "Result should be an array");
-    assert.equal(result.length > 0, true, "Result array should not be empty");
+    expect(result).to.be.an("array");
+    expect(result.length).to.be.greaterThan(0);
   });
 
   it("Should get paginated products", async function () {
+    this.timeout(TEST_TIMEOUT);
     const result = await this.productsDao.paginatedProducts("1");
-    assert.equal(Array.isArray(result.docs), true, "Result should be an array");
-    assert.equal(
-      result.docs.length > 0,
-      true,
-      "Result array should not be empty"
-    );
+    expect(result.docs).to.be.an("array");
+    expect(result.docs.length).to.be.greaterThan(0);
   });
 });
