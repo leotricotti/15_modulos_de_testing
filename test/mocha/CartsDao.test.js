@@ -23,7 +23,7 @@ async function getUpdatedCart(cartsDao, cid) {
 }
 
 describe("Testing Carts Dao", () => {
-  beforeEach(function () {
+  before(function () {
     this.cartsDao = new Carts();
     this.productsDao = new Products();
   });
@@ -35,7 +35,6 @@ describe("Testing Carts Dao", () => {
   });
 
   it("Should get all carts", async function () {
-    this.timeout(TEST_TIMEOUT);
     const result = await this.cartsDao.getAll();
     assert.equal(Array.isArray(result), true, "Result should be an array");
     assert.equal(
@@ -46,7 +45,6 @@ describe("Testing Carts Dao", () => {
   });
 
   it("Should create a cart", async function () {
-    this.timeout(TEST_TIMEOUT);
     const result = await this.cartsDao.saveCart(emptyCart);
     cid = result._id;
     assert.equal(
@@ -57,7 +55,6 @@ describe("Testing Carts Dao", () => {
   });
 
   it("Should get one cart", async function () {
-    this.timeout(TEST_TIMEOUT);
     const result = await this.cartsDao.getOne(cid);
     assert.equal(
       result._id.toString(),
@@ -67,7 +64,6 @@ describe("Testing Carts Dao", () => {
   });
 
   it("Should add a product to a cart", async function () {
-    this.timeout(TEST_TIMEOUT);
     const cart = {
       products: [
         {
@@ -86,7 +82,6 @@ describe("Testing Carts Dao", () => {
   });
 
   it("Should empty cart", async function () {
-    this.timeout(TEST_TIMEOUT);
     const result = await this.cartsDao.emptyCart(cid, emptyCart);
     const updatedCart = await getUpdatedCart(this.cartsDao, cid);
     assert.equal(
