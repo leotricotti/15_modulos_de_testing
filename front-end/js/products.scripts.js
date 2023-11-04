@@ -1,6 +1,3 @@
-// Puerto del servidor
-const PORT = localStorage.getItem("port");
-
 // Calcula el precio con descuento
 const calculateDiscountedPrice = (price) => {
   const parsedPrice = parseFloat(price);

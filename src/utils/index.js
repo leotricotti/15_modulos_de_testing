@@ -32,9 +32,6 @@ export const verifyToken = (req, res, next) => {
         `Error de autenticación. El token no pudo ser verificado ${new Date().toLocaleString()}`
       );
     } else {
-      req.logger.info(
-        `Token verificado con éxito ${new Date().toLocaleString()}`
-      );
       req.user = user;
       next();
     }
@@ -58,9 +55,6 @@ export const authToken = (req, res, next) => {
         );
         res.status(403).send("No fue posible verificar el token");
       } else {
-        req.logger.info(
-          `Token verificado con éxito ${new Date().toLocaleString()}`
-        );
         req.user = user;
         next();
       }

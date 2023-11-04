@@ -1,8 +1,3 @@
-//Puerto del backend
-const PORT = localStorage.getItem("port");
-//Puerto local
-const localPort = window.location.port;
-
 // Funcion que calcula el precio con descuento
 const calculateDiscountedPrice = (price, discount = 0.85) => {
   const parsedPrice = parseFloat(price);
