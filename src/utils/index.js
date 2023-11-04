@@ -3,10 +3,7 @@ import bcrypt from "bcrypt";
 import config from "../config/config.js";
 import jwt from "jsonwebtoken";
 import { faker } from "@faker-js/faker";
-import CustomError from "../services/errors/CustomError.js";
-import EErrors from "../services/errors/enum.js";
 import { usersService } from "../repository/index.js";
-import { generateAuthErrorInfo } from "../services/errors/info.js";
 
 //Cargar variables de entorno
 const JWT_SECRET = config.jwt.SECRET;
@@ -34,12 +31,6 @@ export const verifyToken = (req, res, next) => {
       req.logger.error(
         `Error de autenticación. El token no pudo ser verificado ${new Date().toLocaleString()}`
       );
-      CustomError.createError({
-        name: "Error de autenticación",
-        cause: generateAuthErrorInfo(token, EErrors.AUTH_ERROR),
-        message: "El token no pudo ser verificado",
-        code: EErrors.AUTH_ERROR,
-      });
     } else {
       req.user = user;
       next();
@@ -54,12 +45,6 @@ export const authToken = (req, res, next) => {
     req.logger.error(
       `Error de autenticación. No es prosible autenticar el usuario ${new Date().toLocaleString()}`
     );
-    CustomError.createError({
-      name: "Error de autenticación",
-      cause: generateAuthErrorInfo(authHeader, EErrors.AUTH_ERROR),
-      message: "No es prosible autenticar el usuario",
-      code: EErrors.AUTH_ERROR,
-    });
     res.status(401).send("No es prosible autenticar el usuario");
   } else {
     const token = authHeader.split(" ")[1];
@@ -68,12 +53,6 @@ export const authToken = (req, res, next) => {
         req.logger.error(
           `Error de autenticación. No fue posible verificar el token ${new Date().toLocaleString()}`
         );
-        CustomError.createError({
-          name: "Error de autenticación",
-          cause: generateAuthErrorInfo(token, EErrors.AUTH_ERROR),
-          message: "No fue posible verificar el token",
-          code: EErrors.AUTH_ERROR,
-        });
         res.status(403).send("No fue posible verificar el token");
       } else {
         req.user = user;
@@ -91,24 +70,12 @@ export const passportCall = (strategy) => {
         req.logger.error(
           `Error de autenticación. Usuario no autorizado ${new Date().toLocaleString()}`
         );
-        CustomError.createError({
-          name: "Error de autenticación",
-          cause: generateAuthErrorInfo(error, EErrors.AUTH_ERROR),
-          message: "Usuario no autorizado",
-          code: EErrors.AUTH_ERROR,
-        });
         res.status(401).send("Usuario no autorizado");
       }
       if (!user) {
         req.logger.error(
           `Error de autenticación. Usuario inexistente ${new Date().toLocaleString()}`
         );
-        CustomError.createError({
-          name: "Error de autenticación",
-          cause: generateAuthErrorInfo(user, EErrors.AUTH_ERROR),
-          message: "Usuario inexistente",
-          code: EErrors.AUTH_ERROR,
-        });
         return res.status(401).json({
           error: info.messages ? info.messages : info.toString(),
         });
@@ -130,24 +97,12 @@ export const authorization = (...roles) => {
         req.logger.error(
           `Error de autenticación: Usuario no autorizado. ${new Date().toLocaleString()}`
         );
-        CustomError.createError({
-          name: "Error de autenticación",
-          cause: generateAuthErrorInfo(req.user, EErrors.AUTH_ERROR),
-          message: "Usuario no autorizado",
-          code: EErrors.AUTH_ERROR,
-        });
         return res.status(401).send({ error: "Usuario no autorizado" });
       }
       if (!roles.includes(userRole)) {
         req.logger.error(
           `Error de autenticación. Usuario sin permisos ${new Date().toLocaleString()}`
         );
-        CustomError.createError({
-          name: "Error de autenticación",
-          cause: generateAuthErrorInfo(req.user, EErrors.AUTH_ERROR),
-          message: "Usuario sin permisos",
-          code: EErrors.AUTH_ERROR,
-        });
         return res.status(403).send({ error: "Usuario sin permisos" });
       }
       next();

@@ -49,6 +49,11 @@ describe("Testing Products Dao With Chai", () => {
       price: 100,
       stock: 10,
       category: "Test category",
+      thumbnail: [
+        {
+          img1: "https://freezedepot.com/wp-content/uploads/2023/05/producto-sin-imagen.png",
+        },
+      ],
     };
     const result = await this.productsDao.saveProduct(product);
     pid = result._id;
@@ -68,6 +73,11 @@ describe("Testing Products Dao With Chai", () => {
       price: 100,
       stock: 10,
       category: "Test category modified",
+      thumbnail: [
+        {
+          img1: "https://freezedepot.com/wp-content/uploads/2023/05/producto-sin-imagen.png",
+        },
+      ],
     };
     const result = await this.productsDao.updateProduct(pid, product);
     const updatedProduct = await getUpdatedProduct(this.productsDao, pid);
