@@ -408,7 +408,7 @@ const showCartProducts = async () => {
         <nav class="d-flex mb-3 nav-products mt-5 flex-wrap justify-content-center">
           <h3 class="fw-normal text-black mb-2">Aún no hay productos</h3>
           <button class="btn btn-secondary btn-sm" type="button">
-            <a href="http://127.0.0.1:5500/html/products.html"> Ir a comprar </a>
+            <a href="http://127.0.0.1:${localPort}/html/products.html"> Ir a comprar </a>
           </button>
         </nav>
       `;
@@ -436,3 +436,12 @@ const chatClose = document.getElementById("chat-close");
 chatClose.addEventListener("click", () => {
   chatContainer.classList.remove("active");
 });
+
+const localPort = localStorage.getItem("localPort");
+const goToProducts = () => {
+  window.location.href = `http://127.0.0.1:${localPort}/html/products.html`;
+};
+
+const goToCart = () => {
+  window.location.href = `http://127.0.0.1:${localPort}/html/cart.html`;
+};

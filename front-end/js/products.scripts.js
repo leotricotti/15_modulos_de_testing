@@ -230,3 +230,15 @@ const chatClose = document.getElementById("chat-close");
 chatClose.addEventListener("click", () => {
   chatContainer.classList.remove("active");
 });
+
+const localPort = localStorage.getItem("localPort");
+
+// Redirecciona a la página de carritos
+const goToCart = () => {
+  window.location.href = `http://127.0.0.1:${localPort}/html/cart.html`;
+};
+
+// Redirecciona a la página de productos
+const goToProducts = () => {
+  window.location.href = `http://127.0.0.1:${localPort}/html/products.html`;
+};

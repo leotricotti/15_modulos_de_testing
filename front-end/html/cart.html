@@ -53,12 +53,9 @@
             width="25"
             height="25"
           />
-          <a
-            class="navbar-brand"
-            href="http://127.0.0.1:5500/html/products.html "
-          >
+          <button class="navbar-brand btn btn-brand" onclick="goToProducts()">
             E-Store
-          </a>
+          </button>
           <div
             class="collapse navbar-collapse d-flex align-items-center mb-0 position-relative"
             id="navbarSupportedContent"
@@ -85,15 +82,12 @@
                   id="dropdown-menu"
                 ></ul>
               </li>
-              <a
-                class="btn position-relative"
-                href="http://127.0.0.1:5500/html/cart.html"
-              >
+              <button class="btn position-relative" onclick="goToCart()">
                 <div class="cart-basket">
                   <span class="basket-count" id="cart-badge"></span>
                 </div>
                 <i class="fa-solid fa-cart-shopping"></i>
-              </a>
+              </button>
             </ul>
           </div>
         </div>

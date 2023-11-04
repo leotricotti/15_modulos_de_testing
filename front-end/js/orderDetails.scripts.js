@@ -5,9 +5,7 @@ async function orderDetails() {
   const orderDetails = document.getElementById("order-container");
   const order = await JSON.parse(localStorage.getItem("order"));
 
-  console.log(order);
-
-  productsData.push(order.products[0]);
+  productsData.push(...order.products);
   productsWithOutStock.push(order.remainingProducts);
 
   const html = `

@@ -8,7 +8,6 @@ import { generateTicketErrorInfo } from "../services/errors/info.js";
 async function finishPurchase(req, res, next) {
   const { username, products, amountPurchase } = req.body;
   const { cid } = req.params;
-
   try {
     if (!username || !amountPurchase || !products || !cid) {
       req.logger.error(
@@ -45,9 +44,13 @@ async function finishPurchase(req, res, next) {
       (product) => product.product.stock > product.quantity
     );
 
+    console.log(productWithStock);
+
     const totalPurchase = productWithStock.reduce((acc, product) => {
       return acc + product.product.price * product.quantity * 0.85;
-    });
+    }, 0);
+
+    console.log("total", totalPurchase);
 
     await Promise.all(
       productWithStock.map(async (product) => {
@@ -56,13 +59,6 @@ async function finishPurchase(req, res, next) {
           stock: newStock,
         });
       })
-    );
-
-    const missingProductDiscount = productWithOutStock.reduce(
-      (acc, product) => {
-        return acc + product.product.price * product.quantity * 0.85;
-      },
-      0
     );
 
     if (productWithOutStock.length === 0) {
@@ -104,7 +100,7 @@ async function finishPurchase(req, res, next) {
       const newTicket = {
         code: Math.floor(Math.random() * 1000000),
         purchase_datetime: new Date().toLocaleString(),
-        amount: (amountPurchase - missingProductDiscount).toFixed(2),
+        amount: totalPurchase.toFixed(2),
         purchaser: username,
       };
 
