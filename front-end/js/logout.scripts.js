@@ -1,5 +1,8 @@
 //Cerrar sesión
 const logout = () => {
+  // Puerto local
+  localStorage.getItem("localPort");
+
   Swal.fire({
     title: "¿Estás seguro que deseas cerrar sesión?",
     showDenyButton: true,
@@ -30,7 +33,7 @@ const logout = () => {
         localStorage.removeItem("token");
         localStorage.removeItem("user");
         localStorage.setItem("currentPage", 1);
-        window.location.href = "http://127.0.0.1:5500/html/index.html";
+        window.location.href = `http://127.0.0.1:${locaalPort}/html/index.html`;
       }, 2000);
     }
   });

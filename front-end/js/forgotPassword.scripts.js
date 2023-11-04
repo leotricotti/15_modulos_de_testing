@@ -1,8 +1,10 @@
 // Función que envía los datos al backend
 const forgotPassword = async (username) => {
+  const PORT = localStorage.getItem("port");
+
   try {
     const response = await fetch(
-      "http://localhost:8080/api/sessions/forgotPassword",
+      `http://localhost:${PORT}/api/sessions/forgotPassword`,
       {
         method: "POST",
         headers: {

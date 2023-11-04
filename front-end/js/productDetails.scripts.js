@@ -18,16 +18,19 @@ function addProdutAndCloseDetails(id) {
 
 const showDetailedInfo = async (id) => {
   const token = localStorage.getItem("token");
-  console.log(id);
+  const PORT = localStorage.getItem("port");
 
   try {
-    const response = await fetch(`http://localhost:8080/api/products/${id}`, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-    });
+    const response = await fetch(
+      `http://localhost:${PORT}/api/products/${id}`,
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
 
     const data = await response.json();
     const { product } = data;

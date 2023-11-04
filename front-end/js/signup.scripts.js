@@ -1,5 +1,6 @@
 // Función para crear un usuario
 async function postSignup(first_name, last_name, username, password) {
+  const PORT = localStorage.getItem("port");
   const data = {
     first_name,
     last_name,
@@ -7,7 +8,7 @@ async function postSignup(first_name, last_name, username, password) {
     password,
   };
 
-  const response = await fetch("http://localhost:8080/api/sessions/signup", {
+  const response = await fetch(`http://localhost:${PORT}/api/sessions/signup`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",

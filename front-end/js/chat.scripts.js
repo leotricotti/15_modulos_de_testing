@@ -1,5 +1,8 @@
+// Puerto del servidor
+const PORT = localStorage.getItem("port");
+
 // Conexión con el servidor y envío de mensajes
-const socket = io("http://localhost:8080");
+const socket = io(`http://localhost:${PORT}`);
 const chatBox = document.getElementById("textAreaExample");
 const user = JSON.parse(localStorage.getItem("user"));
 const userRole = user.role;

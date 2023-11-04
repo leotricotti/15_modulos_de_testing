@@ -20,9 +20,10 @@ function toggleUserRole() {
 async function updateUserRole(newRoleData) {
   const token = localStorage.getItem("token");
   const userId = user.username;
+  const PORT = localStorage.getItem("port");
 
   const response = await fetch(
-    `http://localhost:8080/api/sessions/premium/${userId}`,
+    `http://localhost:${PORT}/api/sessions/premium/${userId}`,
     {
       method: "PUT",
       headers: {

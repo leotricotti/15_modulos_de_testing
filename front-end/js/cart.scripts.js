@@ -282,7 +282,7 @@ const showCartProducts = async () => {
 
   try {
     const response = await fetch(
-      `http://localhost:${8080}/api/carts/populated/${cartId}`,
+      `http://localhost:${PORT}/api/carts/populated/${cartId}`,
       {
         method: "GET",
         headers: {

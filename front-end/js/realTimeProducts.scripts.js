@@ -1,5 +1,8 @@
 // Paginación de productos
 let page = 1;
+// Puerto del servidor
+const PORT = localStorage.getItem("port");
+
 // Cantidad de productos
 const userLocalData = JSON.parse(localStorage.getItem("user"));
 const userRoleInfo = userLocalData.role;
@@ -42,7 +45,7 @@ async function handleUpdateProduct(
     };
 
     const response = await fetch(
-      `http://localhost:8080/api/realTimeProducts/${id}`,
+      `http://localhost:${PORT}/api/realTimeProducts/${id}`,
       {
         method: "PUT",
         headers: {
@@ -117,7 +120,7 @@ const getProductToUpdate = async (id) => {
   const updateProductForm = document.getElementById("update-product-container");
 
   const response = await fetch(
-    `http://localhost:8080/api/realTimeProducts/${id}`,
+    `http://localhost:${PORT}/api/realTimeProducts/${id}`,
     {
       method: "GET",
       headers: {
@@ -273,14 +276,17 @@ async function handleSubmit(e) {
           : thumbnail.value,
     };
 
-    const response = await fetch("http://localhost:8080/api/realTimeProducts", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${localStorage.getItem("token")}`,
-      },
-      body: JSON.stringify(product),
-    });
+    const response = await fetch(
+      `http://localhost:${PORT}/api/realTimeProducts`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+        body: JSON.stringify(product),
+      }
+    );
     if (!response.ok) {
       return Swal.fire({
         icon: "error",
@@ -319,13 +325,16 @@ async function handleSubmit(e) {
 
 const getProducts = async (page) => {
   try {
-    const result = await fetch("http://localhost:8080/api/realTimeProducts", {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${localStorage.getItem("token")}`,
-      },
-    });
+    const result = await fetch(
+      `http://localhost:${PORT}/api/realTimeProducts`,
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      }
+    );
 
     if (result.status === 404) {
       return Swal.fire({
@@ -461,7 +470,7 @@ function eliminarProducto(id) {
   }).then(async (result) => {
     if (result.isConfirmed) {
       const response = await fetch(
-        `http://localhost:8080/api/realTimeProducts/${id}`,
+        `http://localhost:${PORT}/api/realTimeProducts/${id}`,
         {
           method: "DELETE",
           headers: {

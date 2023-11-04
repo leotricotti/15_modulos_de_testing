@@ -10,6 +10,7 @@ const PORT = localStorage.getItem("port");
 
 // Local Port
 let localPort = window.location.port;
+localStorage.setItem("localPort", localPort);
 
 // Crea un carrito vacío en la base de datos
 const createCart = async () => {

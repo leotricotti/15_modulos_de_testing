@@ -1,15 +1,20 @@
+// Puerto del servidor
+const PORT = localStorage.getItem("port");
+
+// Calcula el precio con descuento
 const calculateDiscountedPrice = (price) => {
   const parsedPrice = parseFloat(price);
   const discountedPrice = (parsedPrice * 0.85).toFixed(2);
   return discountedPrice;
 };
 
+// Maneja la paginación y el filtrado de productos
 const productsHandler = async (handler, index) => {
   if (!handler) handler = "page";
   if (!index) index = 1;
 
   const result = await fetch(
-    `http://localhost:8080/api/products?${handler}=${index}`,
+    `http://localhost:${PORT}/api/products?${handler}=${index}`,
     {
       method: "GET",
       headers: {
@@ -130,7 +135,7 @@ const saveCartId = (cartId) => {
 //Obtener carrito
 const getCartId = async () => {
   try {
-    const response = await fetch("http://localhost:8080/api/carts", {
+    const response = await fetch(`http://localhost:${PORT}/api/carts`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -158,7 +163,7 @@ const addCartId = async () => {
       await new Promise((resolve) => setTimeout(resolve, 1000));
       cartId = localStorage.getItem("cartId");
     }
-    const response = await fetch("http://localhost:8080/api/userCart", {
+    const response = await fetch(`http://localhost:${PORT}/api/userCart`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
@@ -179,7 +184,7 @@ const addProduct = async (idProduct) => {
   const cartId = localStorage.getItem("cartId");
   try {
     const response = await fetch(
-      `http://localhost:8080/api/carts/${cartId}/product/${idProduct}`,
+      `http://localhost:${PORT}/api/carts/${cartId}/product/${idProduct}`,
       {
         method: "POST",
         headers: {
