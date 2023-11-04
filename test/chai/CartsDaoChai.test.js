@@ -3,7 +3,6 @@ import Carts from "../../src/dao/classes/carts.dao.js";
 import Products from "../../src/dao/classes/products.dao.js";
 import chai from "chai";
 import config from "../../src/config/config.js";
-import e from "express";
 
 // Configuración de Chai
 const expect = chai.expect;

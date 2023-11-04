@@ -1,10 +1,23 @@
+//Puerto para el servidor
+const serverPort = async () => {
+  const port = await fetch("http://localhost:8080");
+  const result = await port.json();
+  localStorage.setItem("port", result.port);
+};
+
+addEventListener("load", serverPort());
+const PORT = localStorage.getItem("port");
+
+// Local Port
+let localPort = window.location.port;
+
 // Crea un carrito vacío en la base de datos
 const createCart = async () => {
   try {
     if (localStorage.getItem("cartId")) {
       return;
     }
-    const response = await fetch("http://localhost:8080/api/carts", {
+    const response = await fetch(`http://localhost:${PORT}/api/carts`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -23,13 +36,16 @@ const createCart = async () => {
 // Función que captura la información del usuario y la almacena en el local storage
 const getUser = async () => {
   try {
-    const response = await fetch("http://localhost:8080/api/sessions/current", {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${localStorage.getItem("token")}`,
-      },
-    });
+    const response = await fetch(
+      `http://localhost:${PORT}/api/sessions/current`,
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      }
+    );
 
     const result = await response.json();
     const role = result.data.role;
@@ -38,7 +54,7 @@ const getUser = async () => {
     }
 
     const url = role === "admin" ? "realTimeProducts.html" : "products.html";
-    window.location.href = `http://127.0.0.1:5500/html/${url}`;
+    window.location.href = `http://127.0.0.1:${localPort}/html/${url}`;
 
     return result;
   } catch (error) {
@@ -61,13 +77,16 @@ loginForm.addEventListener("submit", (event) => {
 // Función para enviar los datos de inicio de sesión al servidor
 const postLogin = async (username, password) => {
   try {
-    const response = await fetch("http://localhost:8080/api/sessions/login", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ username, password }),
-    });
+    const response = await fetch(
+      `http://localhost:${PORT}/api/sessions/login`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ username, password }),
+      }
+    );
 
     const result = await response.json();
     localStorage.setItem("token", result.token);
@@ -98,7 +117,7 @@ const postLogin = async (username, password) => {
 
 // Login con GitHub
 const githubLogin = () => {
-  window.location.href = "http://localhost:8080/api/sessions/github";
+  window.location.href = `http://localhost:${PORT}/api/sessions/github`;
 };
 
 // Spinner de carga

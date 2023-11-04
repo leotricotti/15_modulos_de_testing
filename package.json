@@ -5,7 +5,7 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "test": "mocha test/chai/CartsDaoChai.test.js --timeout 10000 --exit",
+    "test": "mocha test/chai/UtilsChai.test.js --timeout 10000 --exit",
     "start": "nodemon src/app.js"
   },
   "keywords": [],

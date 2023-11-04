@@ -103,6 +103,11 @@ app.use(
 );
 app.use(errorHandler);
 
+// Ruta para el home
+app.get("/", (req, res) => {
+  res.send({ port: PORT });
+});
+
 // Server
 const httpServer = app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);

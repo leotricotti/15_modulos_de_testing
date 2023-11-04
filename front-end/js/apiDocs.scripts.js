@@ -1,7 +1,8 @@
 async function getDocumentation() {
   const token = localStorage.getItem("token");
+  const PORT = localStorage.getItem("port");
 
-  const response = await fetch("http://localhost:8080/api/docs", {
+  const response = await fetch(`http://localhost:${PORT}/api/docs`, {
     method: "GET",
     headers: {
       "Content-Type": "application/json",

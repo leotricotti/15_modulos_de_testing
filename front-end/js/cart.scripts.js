@@ -1,3 +1,8 @@
+//Puerto del backend
+const PORT = localStorage.getItem("port");
+//Puerto local
+const localPort = window.location.port;
+
 // Funcion que calcula el precio con descuento
 const calculateDiscountedPrice = (price, discount = 0.85) => {
   const parsedPrice = parseFloat(price);
@@ -37,7 +42,7 @@ async function finishPurchase() {
 
   try {
     const response = await fetch(
-      `http://localhost:8080/api/carts/${cartId}/purchase`,
+      `http://localhost:${PORT}/api/carts/${cartId}/purchase`,
       {
         method: "POST",
         headers: {
@@ -112,7 +117,7 @@ const increaseQuantity = async (idProduct) => {
   const token = localStorage.getItem("token");
 
   const response = await fetch(
-    `http://localhost:8080/api/carts/${cartId}/product/${idProduct}`,
+    `http://localhost:${PORT}/api/carts/${cartId}/product/${idProduct}`,
     {
       method: "POST",
       headers: {
@@ -138,7 +143,7 @@ const decreaseQuantity = async (idProduct) => {
   const token = localStorage.getItem("token");
 
   const response = await fetch(
-    `http://localhost:8080/api/carts/${cartId}/product/${idProduct}`,
+    `http://localhost:${PORT}/api/carts/${cartId}/product/${idProduct}`,
     {
       method: "POST",
       headers: {
@@ -179,7 +184,7 @@ const deleteProduct = async (idProduct) => {
   }).then(async (result) => {
     if (result.isConfirmed) {
       const response = await fetch(
-        `http://localhost:8080/api/carts/${cartId}/product/${idProduct}`,
+        `http://localhost:${PORT}/api/carts/${cartId}/product/${idProduct}`,
         {
           method: "DELETE",
           headers: {
@@ -225,7 +230,7 @@ const emptyCart = async () => {
   const cartId = localStorage.getItem("cartId");
   const token = localStorage.getItem("token");
 
-  await fetch(`http://localhost:8080/api/carts/${cartId}`, {
+  await fetch(`http://localhost:${PORT}/api/carts/${cartId}`, {
     method: "DELETE",
     headers: {
       "Content-Type": "application/json",
@@ -268,7 +273,7 @@ const deleteAllProducts = async () => {
 //Direccionar a la pagina de productos anterior
 const continueBuying = () => {
   const page = localStorage.getItem("currentPage");
-  window.location.href = `http://127.0.0.1:5500/html/products.html`;
+  window.location.href = `http://127.0.0.1:${localPort}/html/products.html`;
 };
 
 const showCartProducts = async () => {
@@ -277,7 +282,7 @@ const showCartProducts = async () => {
 
   try {
     const response = await fetch(
-      `http://localhost:8080/api/carts/populated/${cartId}`,
+      `http://localhost:${8080}/api/carts/populated/${cartId}`,
       {
         method: "GET",
         headers: {
