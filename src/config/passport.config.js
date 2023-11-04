@@ -123,6 +123,7 @@ const initializeGithubStrategy = () => {
               last_name: profile.displayName.split(" ")[1],
               email: profile?.emails[0]?.value,
               password: "123",
+              carts: [],
             };
             const userNew = await usersService.signupUser(newUser);
             return done(null, userNew);

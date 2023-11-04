@@ -41,7 +41,7 @@ const swaggerOptions = {
   },
   servers: [
     {
-      url: "http://localhost:8080",
+      url: `http://localhost:${PORT}`,
     },
   ],
   apis: [`${__dirname}/docs/**/*.yaml`],
@@ -80,27 +80,12 @@ app.use(
   swaggerUIExpress.serve,
   swaggerUIExpress.setup(specs, { explorer: true })
 );
-app.use("/api/userCart", authToken, authorization("user", "premium"), UserCart);
-app.use("/api/carts", authToken, authorization("user", "premium"), CartsRouter);
+app.use("/api/userCart", UserCart);
+app.use("/api/carts", CartsRouter);
 app.use("/api/sessions", SessionsRouter);
-app.use(
-  "/api/products",
-  authToken,
-  authorization("user", "premium"),
-  ProductsRouter
-);
-app.use(
-  "/api/realTimeProducts",
-  authToken,
-  authorization("admin", "premium"),
-  RealTimeProducts
-);
-app.use(
-  "/api/mockingProducts",
-  authToken,
-  authorization("user", "premium"),
-  MockingProducts
-);
+app.use("/api/products", ProductsRouter);
+app.use("/api/realTimeProducts", RealTimeProducts);
+app.use("/api/mockingProducts", MockingProducts);
 app.use(errorHandler);
 
 // Ruta para el home
