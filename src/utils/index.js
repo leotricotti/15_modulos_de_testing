@@ -32,6 +32,9 @@ export const verifyToken = (req, res, next) => {
         `Error de autenticación. El token no pudo ser verificado ${new Date().toLocaleString()}`
       );
     } else {
+      req.logger.info(
+        `Token verificado con éxito ${new Date().toLocaleString()}`
+      );
       req.user = user;
       next();
     }
@@ -55,6 +58,9 @@ export const authToken = (req, res, next) => {
         );
         res.status(403).send("No fue posible verificar el token");
       } else {
+        req.logger.info(
+          `Token verificado con éxito ${new Date().toLocaleString()}`
+        );
         req.user = user;
         next();
       }
@@ -62,26 +68,19 @@ export const authToken = (req, res, next) => {
   }
 };
 
-// Autenticar usuario con passport
+// Esta función para autenticar a los usuarios.
 export const passportCall = (strategy) => {
   return async (req, res, next) => {
     passport.authenticate(strategy, function (error, user, info) {
-      if (error) {
-        req.logger.error(
-          `Error de autenticación. Usuario no autorizado ${new Date().toLocaleString()}`
-        );
-        res.status(401).send("Usuario no autorizado");
-      }
-      if (!user) {
-        req.logger.error(
-          `Error de autenticación. Usuario inexistente ${new Date().toLocaleString()}`
-        );
+      if (error) return next(error);
+      if (!user)
         return res.status(401).json({
           error: info.messages ? info.messages : info.toString(),
         });
-      } else {
-        req.user = user;
-      }
+      req.logger.info(
+        `Usuario autenticado con éxito ${new Date().toLocaleString()}`
+      );
+      req.user = user;
       next();
     })(req, res, next);
   };

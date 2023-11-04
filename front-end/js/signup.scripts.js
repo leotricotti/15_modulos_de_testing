@@ -19,6 +19,8 @@ async function postSignup(first_name, last_name, username, password) {
 
   const result = await response.json();
 
+  console.log(result);
+
   if (result.error) {
     Swal.fire({
       icon: "error",
