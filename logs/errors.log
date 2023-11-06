@@ -34,3 +34,7 @@
 {"level":"error","message":"Error de base de datos: Usuario no encontrado 6/11/2023, 10:02:26"}
 {"level":"error","message":"Error de base de datos: Usuario no encontrado 6/11/2023, 10:02:53"}
 {"level":"error","message":"Error de base de datos: Usuario no encontrado 6/11/2023, 10:11:11"}
+{"level":"error","message":"Error de base de autenticación: La contraseña no puede ser igual a la anterior 6/11/2023, 12:50:12"}
+{"level":"error","message":"Error de autenticación. No es prosible autenticar el usuario 6/11/2023, 13:04:01"}
+{"level":"error","message":"Error de autenticación. No fue posible verificar el token 6/11/2023, 13:09:26"}
+{"level":"error","message":"Error de base de datos: Usuario no encontrado 6/11/2023, 13:10:30"}

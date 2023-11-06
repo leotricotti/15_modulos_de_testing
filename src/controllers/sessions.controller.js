@@ -156,7 +156,6 @@ async function forgotPassword(req, res, next) {
 // Ruta que actualiza la contraseña del usuario
 async function updatePassword(req, res, next) {
   const { newPasswordData } = req.body;
-  console.log(newPasswordData);
   const password = newPasswordData;
   const username = req.user.user.username;
 
@@ -221,6 +220,7 @@ async function updatePassword(req, res, next) {
 async function updateUserRole(req, res, next) {
   const { role } = req.body;
   const { id } = req.params;
+  console.log(id, role);
   const username = id;
   try {
     if (!role || !username) {
@@ -249,11 +249,15 @@ async function updateUserRole(req, res, next) {
     } else {
       const uid = user[0]._id;
       const result = await usersService.updateUserRole(uid, role);
+      const updatedUser = await usersService.getOneUser(username);
+      const userDto = new UsersDto(updatedUser[0]);
+      console.log(result);
       req.logger.info(
         `Rol actualizado con éxito ${new Date().toLocaleString()}`
       );
       res.status(200).json({
         message: "Rol actualizado con éxito",
+        data: userDto,
       });
     }
   } catch (error) {
