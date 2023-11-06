@@ -1,6 +1,7 @@
 import chai from "chai";
 import config from "../../src/config/config.js";
 import supertest from "supertest";
+import e from "express";
 
 // Configuración de Chai y Supertest
 const expect = chai.expect;
@@ -257,7 +258,27 @@ describe("Testing Ecommerse Store", () => {
           password: randomCode.toString(),
         });
         console.log(response.body);
-        console.log(randomEmail);
+        expect(response.status).to.eql(200);
+        expect(response.body.message).to.equal("Usuario creado con éxito");
+        expect(response.body.data).to.have.property("_id");
+        expect(response.body.data.first_name).equal("Test");
+        expect(response.body.data.last_name).equal("User");
+        expect(response.body.data.email).equal(randomEmail);
+        expect(response.body.data).to.not.have.property("image");
+      });
+
+      it("Should login a user", async () => {
+        const response = await request.post("/api/sessions/login").send({
+          username: randomEmail,
+          password: randomCode.toString(),
+        });
+        userToken = response.body.token;
+        expect(response.status).to.eql(200);
+        expect(response.body.message).to.equal("Login realizado con éxito");
+        expect(response.body).to.have.property("token");
+        expect(response.body.token).to.not.be.empty;
+        expect(response.body.token).to.be.a("string");
+        expect(response.body).to.not.have.property("user");
       });
     });
   });
