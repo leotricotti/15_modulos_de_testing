@@ -60,11 +60,14 @@ const initializeRegisterStrategy = () => {
           email === ADMIN_ID || password === ADMIN_PASSWORD ? "admin" : "user";
         try {
           const user = await usersService.getOneUser(email);
-          if (user) {
-            req.logger(
+          console.log(user);
+          if (!user.length === 0) {
+            req.logger.error(
               `Error de autenticación. Usuario ya existe ${new Date().toLocaleString()}`
             );
-            return done(error);
+            return done(null, false, {
+              message: "Usuario ya existe",
+            });
           } else {
             const newUser = {
               first_name,
@@ -74,7 +77,7 @@ const initializeRegisterStrategy = () => {
               role,
             };
             const result = await usersService.signupUser(newUser);
-            req.logger(
+            req.logger.error(
               `Usuario creado con éxito ${new Date().toLocaleString()}`
             );
             return done(null, result);

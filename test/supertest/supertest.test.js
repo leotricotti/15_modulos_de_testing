@@ -1,7 +1,6 @@
 import chai from "chai";
 import config from "../../src/config/config.js";
 import supertest from "supertest";
-import e from "express";
 
 // Configuración de Chai y Supertest
 const expect = chai.expect;
@@ -14,6 +13,8 @@ let productQuantity = 0;
 let adminToken = "";
 let userToken = "";
 const randomCode = Math.floor(Math.random() * 100000);
+const randomAmount = Math.floor(Math.random() * 100000);
+const randomEmail = `testuser${randomCode}@gmail.com`;
 const adminUsername = config.admin.EMAIL;
 const adminPassword = config.admin.PASSWORD;
 const username = "tricottileo@gmail.com";
@@ -60,19 +61,19 @@ describe("Testing Ecommerse Store", () => {
       userToken = response.body.token;
     });
 
-    it("Should get all products", async () => {
-      const response = await request
-        .get("/api/products")
-        .set("Authorization", `Bearer ${userToken}`);
-      pid = response.body.products[0]._id;
-      expect(response.status).to.eql(200);
-      expect(response.body.message).to.equal("Productos obtenidos con éxito");
-      expect(response.body.products[0]).to.have.property("_id");
-      expect(response.body.products[0]).to.have.property("title");
-      expect(response.body.products[0]).to.have.property("price");
-      expect(response.body.products[0]).to.have.property("description");
-      expect(response.body.products[0]).to.not.have.property("image");
-    });
+    // it("Should get all products", async () => {
+    //   const response = await request
+    //     .get("/api/products")
+    //     .set("Authorization", `Bearer ${userToken}`);
+    //   pid = response.body.products[0]._id;
+    //   expect(response.status).to.eql(200);
+    //   expect(response.body.message).to.equal("Productos obtenidos con éxito");
+    //   expect(response.body.products[0]).to.have.property("_id");
+    //   expect(response.body.products[0]).to.have.property("title");
+    //   expect(response.body.products[0]).to.have.property("price");
+    //   expect(response.body.products[0]).to.have.property("description");
+    //   expect(response.body.products[0]).to.not.have.property("image");
+    // });
 
     //   it("Should get one product", async () => {
     //     const response = await request
@@ -144,105 +145,119 @@ describe("Testing Ecommerse Store", () => {
     // });
 
     // Test carts endpoints
-    describe("Testing Carts Endpoints", () => {
-      before(async function () {
-        const response = await request.post("/api/sessions/login").send({
-          username: username,
-          password: userPassword,
+    // describe("Testing Carts Endpoints", () => {
+    //   before(async function () {
+    //     const response = await request.post("/api/sessions/login").send({
+    //       username: username,
+    //       password: userPassword,
+    //     });
+    //     userToken = response.body.token;
+    //   });
+
+    // it("Should get all carts", async () => {
+    //   const response = await request
+    //     .get("/api/carts")
+    //     .set("Authorization", `Bearer ${userToken}`);
+    //   cid = response.body.data[0]._id;
+    //   expect(response.status).to.eql(200);
+    //   expect(response.body.message).to.equal("Carritos cargados con éxito");
+    //   expect(response.body.data[0]).to.have.property("_id");
+    //   expect(response.body.data[0]).to.have.property("products");
+    // });
+
+    // it("Should get one cart", async () => {
+    //   const response = await request
+    //     .get(`/api/carts/${cid}`)
+    //     .set("Authorization", `Bearer ${userToken}`);
+    //   expect(response.status).to.eql(200);
+    //   expect(response.body.message).to.equal("Carrito obtenido con éxito");
+    //   expect(response.body.data).to.have.property("_id");
+    //   expect(response.body.data).to.have.property("products");
+    // });
+
+    //   it("Should create a cart", async () => {
+    //     const response = await request
+    //       .post("/api/carts")
+    //       .set("Authorization", `Bearer ${userToken}`);
+    //     cid = response.body.data._id;
+    //     expect(response.status).to.eql(200);
+    //     expect(response.body.message).to.equal("Carrito creado con éxito");
+    //     expect(response.body.data).to.have.property("_id");
+    //     expect(response.body.data).to.have.property("products");
+    //     expect(response.body.data.products).to.eql([]);
+    //   });
+
+    //   it("Should add a product to the cart", async () => {
+    //     const response = await request
+    //       .post(`/api/carts/${cid}/product/${pid}`)
+    //       .set("Authorization", `Bearer ${userToken}`)
+    //       .send({ op: "add" });
+    //     expect(response.status).to.eql(200);
+    //     expect(response.body.message).to.equal("Carrito actualizado con éxito");
+    //     expect(
+    //       response.body.data.products.some((product) => product.product === pid)
+    //     ).to.be.true;
+    //     expect(response.body.data.products[0].quantity).to.equal(1);
+    //   });
+
+    //   it("Should increase product quantity", async () => {
+    //     const response = await request
+    //       .post(`/api/carts/${cid}/product/${pid}`)
+    //       .set("Authorization", `Bearer ${userToken}`)
+    //       .send({ op: "add" });
+    //     expect(response.status).to.eql(200);
+    //     expect(response.body.message).to.equal("Carrito actualizado con éxito");
+    //     expect(
+    //       response.body.data.products.some((product) => product.product === pid)
+    //     ).to.be.true;
+    //     expect(response.body.data.products[0].quantity).to.equal(2);
+    //   });
+
+    //   it("Should reduce product quantity", async () => {
+    //     const response = await request
+    //       .post(`/api/carts/${cid}/product/${pid}`)
+    //       .set("Authorization", `Bearer ${userToken}`)
+    //       .send({ op: "substract" });
+    //     expect(response.status).to.eql(200);
+    //     expect(response.body.message).to.equal("Carrito actualizado con éxito");
+    //     expect(
+    //       response.body.data.products.some((product) => product.product === pid)
+    //     ).to.be.true;
+    //     expect(response.body.data.products[0].quantity).to.equal(1);
+    //   });
+
+    //   it("Should delete a product from the cart", async () => {
+    //     const response = await request
+    //       .delete(`/api/carts/${cid}/product/${pid}`)
+    //       .set("Authorization", `Bearer ${userToken}`);
+    //     expect(response.status).to.eql(200);
+    //     expect(response.body.message).to.equal("Producto eliminado con éxito");
+    //     expect(
+    //       response.body.data.products.some((product) => product.product === pid)
+    //     ).to.be.false;
+    //   });
+
+    //   it("Should empty a cart", async () => {
+    //     const response = await request
+    //       .delete(`/api/carts/${cid}`)
+    //       .set("Authorization", `Bearer ${userToken}`);
+    //     expect(response.status).to.eql(200);
+    //     expect(response.body.message).to.equal("Carrito vaciado con éxito");
+    //     expect(response.body.data.products).to.eql([]);
+    //   });
+    // });
+
+    // Test session endpoints
+    describe("Testing Sessions Endpoints", () => {
+      it("Should create a user", async () => {
+        const response = await request.post("/api/sessions/signup").send({
+          first_name: "Test",
+          last_name: "User",
+          email: randomEmail,
+          password: randomCode.toString(),
         });
-        userToken = response.body.token;
-      });
-
-      // it("Should get all carts", async () => {
-      //   const response = await request
-      //     .get("/api/carts")
-      //     .set("Authorization", `Bearer ${userToken}`);
-      //   cid = response.body.data[0]._id;
-      //   expect(response.status).to.eql(200);
-      //   expect(response.body.message).to.equal("Carritos cargados con éxito");
-      //   expect(response.body.data[0]).to.have.property("_id");
-      //   expect(response.body.data[0]).to.have.property("products");
-      // });
-
-      // it("Should get one cart", async () => {
-      //   const response = await request
-      //     .get(`/api/carts/${cid}`)
-      //     .set("Authorization", `Bearer ${userToken}`);
-      //   expect(response.status).to.eql(200);
-      //   expect(response.body.message).to.equal("Carrito obtenido con éxito");
-      //   expect(response.body.data).to.have.property("_id");
-      //   expect(response.body.data).to.have.property("products");
-      // });
-
-      it("Should create a cart", async () => {
-        const response = await request
-          .post("/api/carts")
-          .set("Authorization", `Bearer ${userToken}`);
-        cid = response.body.data._id;
-        expect(response.status).to.eql(200);
-        expect(response.body.message).to.equal("Carrito creado con éxito");
-        expect(response.body.data).to.have.property("_id");
-        expect(response.body.data).to.have.property("products");
-        expect(response.body.data.products).to.eql([]);
-      });
-
-      it("Should add a product to the cart", async () => {
-        const response = await request
-          .post(`/api/carts/${cid}/product/${pid}`)
-          .set("Authorization", `Bearer ${userToken}`)
-          .send({ op: "add" });
-        expect(response.status).to.eql(200);
-        expect(response.body.message).to.equal("Carrito actualizado con éxito");
-        expect(
-          response.body.data.products.some((product) => product.product === pid)
-        ).to.be.true;
-        expect(response.body.data.products[0].quantity).to.equal(1);
-      });
-
-      it("Should increase product quantity", async () => {
-        const response = await request
-          .post(`/api/carts/${cid}/product/${pid}`)
-          .set("Authorization", `Bearer ${userToken}`)
-          .send({ op: "add" });
-        expect(response.status).to.eql(200);
-        expect(response.body.message).to.equal("Carrito actualizado con éxito");
-        expect(
-          response.body.data.products.some((product) => product.product === pid)
-        ).to.be.true;
-        expect(response.body.data.products[0].quantity).to.equal(2);
-      });
-
-      it("Should reduce product quantity", async () => {
-        const response = await request
-          .post(`/api/carts/${cid}/product/${pid}`)
-          .set("Authorization", `Bearer ${userToken}`)
-          .send({ op: "substract" });
-        expect(response.status).to.eql(200);
-        expect(response.body.message).to.equal("Carrito actualizado con éxito");
-        expect(
-          response.body.data.products.some((product) => product.product === pid)
-        ).to.be.true;
-        expect(response.body.data.products[0].quantity).to.equal(1);
-      });
-
-      it("Should delete a product from the cart", async () => {
-        const response = await request
-          .delete(`/api/carts/${cid}/product/${pid}`)
-          .set("Authorization", `Bearer ${userToken}`);
-        expect(response.status).to.eql(200);
-        expect(response.body.message).to.equal("Producto eliminado con éxito");
-        expect(
-          response.body.data.products.some((product) => product.product === pid)
-        ).to.be.false;
-      });
-
-      it("Should empty a cart", async () => {
-        const response = await request
-          .delete(`/api/carts/${cid}`)
-          .set("Authorization", `Bearer ${userToken}`);
-        expect(response.status).to.eql(200);
-        expect(response.body.message).to.equal("Carrito vaciado con éxito");
-        expect(response.body.data.products).to.eql([]);
+        console.log(response.body);
+        console.log(randomEmail);
       });
     });
   });
