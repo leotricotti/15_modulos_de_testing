@@ -1,7 +1,6 @@
 import chai from "chai";
 import config from "../../src/config/config.js";
 import supertest from "supertest";
-import e from "express";
 
 // Configuración de Chai y Supertest
 const expect = chai.expect;
@@ -280,6 +279,29 @@ describe("Testing Ecommerse Store", () => {
         expect(response.body.token).to.be.a("string");
         expect(response.body).to.not.have.property("user");
       });
+
+      it("Should get current user", async () => {
+        const response = await request
+          .get("/api/sessions/current")
+          .set("Authorization", `Bearer ${userToken}`);
+        console.log(response.body);
+        expect(response.status).to.eql(200);
+        expect(response.body.data.first_name).equal("Test");
+        expect(response.body.data.username).equal(randomEmail);
+        expect(response.body.data).to.not.have.property("image");
+      });
+
+      it('Should update user password', async () => {
+        const response = await request
+          .put("/api/sessions/updatePassword")
+          .set("Authorization", `Bearer ${userToken}`)
+          .send({
+            currentPassword: randomCode.toString(),
+            newPassword: randomAmount.toString(),
+          });
+        expect(response.status).to.eql(200);
+        expect(response.body.message).to.equal("Contraseña actualizada con éxito");
+      }
     });
   });
 });
