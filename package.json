@@ -5,7 +5,7 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "test": "mocha test/supertest/supertest.test.js --timeout 10000 --exit",
+    "test": "mocha test/supertest/SessionsSupertest.test.js --timeout 10000 --exit",
     "start": "nodemon src/app.js"
   },
   "keywords": [],

@@ -8,13 +8,9 @@ const request = supertest("http://localhost:8080");
 
 // Variables globales
 let pid = "";
-let cid = "";
-let productQuantity = 0;
 let adminToken = "";
 let userToken = "";
 const randomCode = Math.floor(Math.random() * 100000);
-const randomAmount = Math.floor(Math.random() * 100000);
-const randomEmail = `testuser${randomCode}@gmail.com`;
 const adminUsername = config.admin.EMAIL;
 const adminPassword = config.admin.PASSWORD;
 const username = "tricottileo@gmail.com";

@@ -26,6 +26,7 @@ export const generateToken = (user) => {
 // Verificar si token es valido para actualizar contraseña
 export const verifyToken = (req, res, next) => {
   const token = req.params.token;
+  console.log(token);
   jwt.verify(token, JWT_SECRET, (err, user) => {
     if (err) {
       req.logger.error(

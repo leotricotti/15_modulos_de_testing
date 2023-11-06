@@ -31,3 +31,6 @@
 {"level":"error","message":"Error de autenticación. Usuario ya existe 6/11/2023, 8:56:08"}
 {"level":"error","message":"Usuario creado con éxito 6/11/2023, 8:56:39"}
 {"level":"error","message":"Usuario creado con éxito 6/11/2023, 8:59:56"}
+{"level":"error","message":"Error de base de datos: Usuario no encontrado 6/11/2023, 10:02:26"}
+{"level":"error","message":"Error de base de datos: Usuario no encontrado 6/11/2023, 10:02:53"}
+{"level":"error","message":"Error de base de datos: Usuario no encontrado 6/11/2023, 10:11:11"}

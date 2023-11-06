@@ -145,6 +145,7 @@ async function forgotPassword(req, res, next) {
       );
       res.status(200).json({
         response: "Correo de recuperación enviado al usuario",
+        data: passwordToken,
       });
     }
   } catch (error) {
@@ -155,6 +156,7 @@ async function forgotPassword(req, res, next) {
 // Ruta que actualiza la contraseña del usuario
 async function updatePassword(req, res, next) {
   const { newPasswordData } = req.body;
+  console.log(newPasswordData);
   const password = newPasswordData;
   const username = req.user.user.username;
 
@@ -207,6 +209,7 @@ async function updatePassword(req, res, next) {
       );
       res.status(200).json({
         message: "Contraseña actualizada con éxito",
+        data: result,
       });
     }
   } catch (error) {
