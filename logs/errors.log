@@ -11,3 +11,16 @@
 {"level":"error","message":"Error de autenticación. No es prosible autenticar el usuario 4/11/2023, 16:41:19"}
 {"level":"error","message":"Error de autenticación. No es prosible autenticar el usuario 4/11/2023, 17:11:13"}
 {"level":"error","message":"Error de autenticación. No es prosible autenticar el usuario 4/11/2023, 17:48:14"}
+{"level":"error","message":"Error de base de datos: Error al obtener el producto 4/11/2023, 21:25:25"}
+{"level":"error","message":"Error de tipo de dato: Error al actualizar el producto 4/11/2023, 22:17:38"}
+{"level":"error","message":"Error de tipo de dato: Error al actualizar el producto 4/11/2023, 22:19:50"}
+{"level":"error","message":"Error de autenticación. No es prosible autenticar el usuario 5/11/2023, 9:14:40"}
+{"level":"error","message":"Error de autenticación. Usuario sin permisos 5/11/2023, 9:17:53"}
+{"level":"error","message":"Error de tipo de dato: Error al crear el producto 5/11/2023, 9:43:08"}
+{"level":"error","message":"Error de tipo de dato: Error al actualizar el producto 5/11/2023, 9:43:08"}
+{"level":"error","message":"Error de tipo de dato: Error al agregar productos al carrito 5/11/2023, 21:35:05"}
+{"level":"error","message":"Error de tipo de dato: Error al agregar productos al carrito 5/11/2023, 21:36:16"}
+{"level":"error","message":"Error de tipo de dato: Error al agregar productos al carrito 5/11/2023, 21:36:40"}
+{"level":"error","message":"Error de tipo de dato: Error al agregar productos al carrito 5/11/2023, 21:38:26"}
+{"level":"error","message":"Error de tipo de dato: Error al agregar productos al carrito 5/11/2023, 21:40:21"}
+{"level":"error","message":"Error de tipo de dato: Error al agregar productos al carrito 5/11/2023, 21:41:06"}

@@ -26,7 +26,7 @@ async function getAll(req, res, next) {
       req.logger.info(
         `Carritos cargados con exito ${new Date().toLocaleString()}`
       );
-      res.json({ message: "Carritos cargados con exito", data: carts });
+      res.json({ message: "Carritos cargados con éxito", data: carts });
     }
   } catch (err) {
     next(err);
@@ -143,7 +143,7 @@ async function createCart(req, res, next) {
       req.logger.info(
         `Carrito populado creado con éxito ${new Date().toLocaleString()}`
       );
-      res.json({ message: "Carrito creado con éxito", data: newCart });
+      res.json({ message: "Carrito creado con éxito", data: result });
     }
   } catch (err) {
     next(err);

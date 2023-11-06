@@ -54,7 +54,7 @@ async function saveProduct(req, res, next) {
     }
 
     req.logger.info(`Producto creado con éxito ${new Date().toLocaleString()}`);
-    res.json({ message: "Producto creado con éxito", data: product });
+    res.json({ message: "Producto creado con éxito", data: result });
   } catch (err) {
     next(err);
   }
@@ -153,6 +153,8 @@ async function updateProduct(req, res, next) {
       thumbnail,
     };
 
+    console.log(product);
+
     const result = await productsService.updateOneProduct(pid, product);
 
     if (!result) {
@@ -170,7 +172,11 @@ async function updateProduct(req, res, next) {
     req.logger.info(
       `Producto actualizado con éxito ${new Date().toLocaleString()}`
     );
-    res.json({ message: "Producto actualizado con éxito ", data: product });
+    const productUpdated = await productsService.getOneProduct(pid);
+    res.json({
+      message: "Producto actualizado con éxito ",
+      data: productUpdated,
+    });
   } catch (err) {
     next(err);
   }
