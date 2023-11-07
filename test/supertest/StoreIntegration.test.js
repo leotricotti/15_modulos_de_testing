@@ -2,9 +2,12 @@ import chai from "chai";
 import config from "../../src/config/config.js";
 import supertest from "supertest";
 
+// Puerto del servidor
+const PORT = config.app.PORT;
+
 // Configuración de Chai y Supertest
 const expect = chai.expect;
-const request = supertest("http://localhost:8080");
+const request = supertest(`http://localhost:${PORT}`);
 
 // Variables globales
 let pid = "";
