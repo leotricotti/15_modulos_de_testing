@@ -14,7 +14,7 @@ let pid = "";
 let cid = "";
 let userToken = "";
 const username = "tricottileo@gmail.com";
-const userPassword = "12345";
+const userPassword = "123456";
 
 // Inicio de los tests
 describe("Testing Ecommerse Store", () => {
@@ -32,8 +32,7 @@ describe("Testing Ecommerse Store", () => {
       const response = await request
         .get("/api/products")
         .set("Authorization", `Bearer ${userToken}`);
-      console.log(response.body.products);
-      // pid = response.body.products[0]._id;
+      pid = response.body.products[0]._id;
     });
 
     it("Should get all carts", async () => {

@@ -14,7 +14,7 @@ const randomCode = Math.floor(Math.random() * 100000);
 const adminUsername = config.admin.EMAIL;
 const adminPassword = config.admin.PASSWORD;
 const username = "tricottileo@gmail.com";
-const userPassword = "12345";
+const userPassword = "123456";
 
 // Objetos de prueba
 const testProduct = {
