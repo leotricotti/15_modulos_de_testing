@@ -10,10 +10,9 @@ const request = supertest("http://localhost:8080");
 let pid = "";
 let cid = "";
 let uid = "";
-let product = [];
+const products = [];
 let price = 0;
 let quantity = 0;
-const amountPurchase = price * quantity;
 let userToken = "";
 const randomCode = Math.floor(Math.random() * 100000);
 const randomPassword = Math.floor(Math.random() * 100000);
@@ -58,7 +57,8 @@ describe("Testing Ecommerse Store", () => {
       const response = await request
         .get("/api/products")
         .set("Authorization", `Bearer ${userToken}`);
-      product = response.body.products[0];
+      const product = [response.body.products[0]];
+      products.push({ product });
       price = response.body.products[0].price;
       pid = response.body.products[0]._id;
       expect(response.status).to.eql(200);
@@ -115,15 +115,16 @@ describe("Testing Ecommerse Store", () => {
         .set("Authorization", `Bearer ${userToken}`)
         .send({
           username: randomEmail,
-          amountPurchase: amountPurchase,
-          products: product,
+          amountPurchase: price * quantity,
+          products: products,
         });
-      console.log(response.body);
-      // expect(response.status).to.eql(200);
-      // expect(response.body.message).to.equal("Compra finalizada con éxito");
-      // expect(response.body.data).to.have.property("_id");
-      // expect(response.body.data).to.have.property("products");
-      // expect(response.body.data.products).to.eql([]);
+      expect(response.status).to.eql(200);
+      expect(response.body.message).to.equal("Compra realizada con éxito");
+      expect(response.body.data).to.have.property("code");
+      expect(response.body.data).to.have.property("purchaser");
+      expect(response.body.data.purchaser).to.eql(randomEmail);
+      expect(response.body).to.have.property("products");
+      expect(response.body.products).to.eql([]);
     });
   });
 });

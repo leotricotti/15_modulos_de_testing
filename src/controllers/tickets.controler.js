@@ -8,7 +8,7 @@ import { generateTicketErrorInfo } from "../services/errors/info.js";
 async function finishPurchase(req, res, next) {
   const { username, products, amountPurchase } = req.body;
   const { cid } = req.params;
-  console.log(req.body);
+  console.log(products);
   try {
     if (!username || !amountPurchase || !products || !cid) {
       req.logger.error(
