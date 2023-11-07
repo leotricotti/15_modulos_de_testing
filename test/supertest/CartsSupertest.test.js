@@ -32,7 +32,8 @@ describe("Testing Ecommerse Store", () => {
       const response = await request
         .get("/api/products")
         .set("Authorization", `Bearer ${userToken}`);
-      pid = response.body.products[0]._id;
+      console.log(response.body.products);
+      // pid = response.body.products[0]._id;
     });
 
     it("Should get all carts", async () => {
